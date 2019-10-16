@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
@@ -16,8 +17,9 @@ import Dropdown from "../Dropdown";
 import useStyles from "./styles";
 import configs from "../../configs";
 
-const { countries, sources, categories, languages } = configs;
-export default function AppDrawer() {
+const { countries, sources, categories, languages, dropdownTypes } = configs;
+
+function AppDrawer({ handleDropdownChange }) {
   const classes = useStyles();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -61,7 +63,7 @@ export default function AppDrawer() {
               <Dropdown
                 text="Country"
                 value="Country"
-                handleChange={() => ({})}
+                handleChange={handleDropdownChange(dropdownTypes.country)}
                 options={countries}
               />
             }
@@ -79,7 +81,7 @@ export default function AppDrawer() {
               <Dropdown
                 text="Language"
                 value="Language"
-                handleChange={() => ({})}
+                handleChange={handleDropdownChange(dropdownTypes.language)}
                 options={languages}
               />
             }
@@ -97,7 +99,7 @@ export default function AppDrawer() {
               <Dropdown
                 text="Source"
                 value="Source"
-                handleChange={() => ({})}
+                handleChange={handleDropdownChange(dropdownTypes.source)}
                 options={sources}
               />
             }
@@ -113,9 +115,9 @@ export default function AppDrawer() {
           <ListItemText
             primary={
               <Dropdown
-                text="Country"
-                value="Country"
-                handleChange={() => ({})}
+                text="Category"
+                value="Category"
+                handleChange={handleDropdownChange(dropdownTypes.category)}
                 options={categories}
               />
             }
@@ -143,3 +145,9 @@ export default function AppDrawer() {
     </Drawer>
   );
 }
+
+AppDrawer.propTypes = {
+  handleDropdownChange: PropTypes.func.isRequired
+};
+
+export default AppDrawer;
