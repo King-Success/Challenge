@@ -1,4 +1,5 @@
 import { withStyles } from "@material-ui/core/styles";
+import "typeface-montserrat";
 
 export default withStyles({
   "@global": {

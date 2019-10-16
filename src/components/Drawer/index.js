@@ -14,7 +14,9 @@ import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutline
 import PolicyOutlinedIcon from "@material-ui/icons/PolicyOutlined";
 import Dropdown from "../Dropdown";
 import useStyles from "./styles";
+import configs from "../../configs";
 
+const { countries, sources, categories, languages } = configs;
 export default function AppDrawer() {
   const classes = useStyles();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -60,7 +62,7 @@ export default function AppDrawer() {
                 text="Country"
                 value="Country"
                 handleChange={() => ({})}
-                options={[]}
+                options={countries}
               />
             }
           />
@@ -78,11 +80,7 @@ export default function AppDrawer() {
                 text="Language"
                 value="Language"
                 handleChange={() => ({})}
-                options={[
-                  { code: "", name: "Language" },
-                  { code: "en", name: "English" },
-                  { code: "fr", name: "French" }
-                ]}
+                options={languages}
               />
             }
           />
@@ -100,7 +98,7 @@ export default function AppDrawer() {
                 text="Source"
                 value="Source"
                 handleChange={() => ({})}
-                options={[]}
+                options={sources}
               />
             }
           />
@@ -118,7 +116,7 @@ export default function AppDrawer() {
                 text="Country"
                 value="Country"
                 handleChange={() => ({})}
-                options={[]}
+                options={categories}
               />
             }
           />

@@ -4,7 +4,6 @@ import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
 import Newsfeed from "../Newsfeed";
 import GlobalCss from "./globalCss";
-import "typeface-montserrat";
 
 const App = () => {
   return (
