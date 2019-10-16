@@ -17,7 +17,7 @@ export default function Navigation({ handleSearch }) {
             MY-NEWS
           </Typography>
           <div className={classes.search}>
-            <SearchForm />
+            <SearchForm submitHandler={handleSearch} />
           </div>
         </Toolbar>
       </AppBar>
