@@ -33,5 +33,10 @@ export default makeStyles(theme => ({
       width: "auto",
       display: "block"
     }
+  },
+  logo: {
+    height: "50px",
+    width: "50px",
+    borderRadius: "50%"
   }
 }));
