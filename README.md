@@ -1,2 +1,0 @@
-# Challenge
-Created with CodeSandbox
