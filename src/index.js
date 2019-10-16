@@ -7,7 +7,6 @@ import { createLogger } from "redux-logger";
 import App from "./containers/App";
 import reducer from "./reducers";
 import "./styles.css";
-import * as NewsfeedActions from "./containers/Newsfeed/NewsfeedReducer";
 
 const loggerMiddleware = createLogger();
 const store = createStore(
@@ -21,5 +20,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-store.dispatch(NewsfeedActions.fetchNews());
