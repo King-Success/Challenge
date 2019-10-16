@@ -2,6 +2,7 @@ import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
+import Newsfeed from "../Newsfeed";
 import GlobalCss from "./globalCss";
 import "typeface-montserrat";
 
@@ -13,6 +14,7 @@ const App = () => {
         <GlobalCss />
         <Navigation handleSearch={() => ({})} />
         <Drawer />
+        <Newsfeed />
       </div>
     </>
   );

@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import configs from "../../configs";
+import colors from "../../configs/colors";
 
-const { colors } = configs;
 export default makeStyles(theme => ({
   card: {
     display: "flex",
