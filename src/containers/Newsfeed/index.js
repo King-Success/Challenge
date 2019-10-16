@@ -5,16 +5,40 @@ import Grid from "@material-ui/core/Grid";
 import Skeleton from "@material-ui/lab/Skeleton";
 import shortid from "shortid";
 import Newscard from "../../components/Newscard";
+import Pagination from "../../components/Pagination";
 import * as NewsfeedActions from "./NewsfeedReducer";
 import useStyles from "./styles";
 
 function Newsfeed({ news, loading, fetchNews }) {
   const classes = useStyles();
-  const { articles } = news;
+  const {
+    articles,
+    total,
+    offset,
+    pageSize,
+    language,
+    category,
+    country,
+    source,
+    searchString
+  } = news;
 
   useEffect(() => {
     fetchNews();
   }, [fetchNews]);
+
+  const handlePageChange = pageOffset => {
+    const fetchData = {
+      offset: pageOffset,
+      pageSize,
+      language,
+      category,
+      country,
+      source,
+      searchString
+    };
+    fetchNews(fetchData);
+  };
 
   return (
     <Grid className={classes.container} container spacing={1} justify="center">
@@ -36,6 +60,18 @@ function Newsfeed({ news, loading, fetchNews }) {
           </Grid>
         );
       })}
+      {loading || total <= pageSize ? (
+        " "
+      ) : (
+        <Pagination
+          limit={10}
+          offset={offset}
+          total={total}
+          onClick={(e, ofst) => {
+            handlePageChange(ofst);
+          }}
+        />
+      )}
     </Grid>
   );
 }
