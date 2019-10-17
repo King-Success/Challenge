@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
@@ -14,6 +14,8 @@ const App = ({ fetchNews }) => {
     offset: defaultPage,
     pageSize: defaultPageSize
   };
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const handleDropdownChange = type => value => {
     fetchNews({ ...fetchData, [type]: value });
   };
@@ -22,13 +24,24 @@ const App = ({ fetchNews }) => {
     fetchNews({ ...fetchData, searchString });
   };
 
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
   return (
     <>
       <div>
         <CssBaseline />
         <GlobalCss />
-        <Navigation handleSearch={handleSearch} />
-        <Drawer handleDropdownChange={handleDropdownChange} />
+        <Navigation
+          handleSearch={handleSearch}
+          handleDrawerToggle={handleDrawerToggle}
+        />
+        <Drawer
+          handleDropdownChange={handleDropdownChange}
+          handleDrawerToggle={handleDrawerToggle}
+          isOpen={drawerOpen}
+        />
         <Newsfeed />
       </div>
     </>

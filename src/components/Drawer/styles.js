@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const drawerWidth = 240;
+const mobileDrawerWidth = 160;
 const appBarHeight = 64;
 
 export default makeStyles(theme => ({
@@ -12,13 +13,14 @@ export default makeStyles(theme => ({
   },
   paperAnchorDockedLeft: {
     borderRight: "none",
-    width: drawerWidth,
     marginTop: appBarHeight,
     paddingTop: 10,
     [theme.breakpoints.down("sm")]: {
-      display: "none",
-      width: 0
+      width: mobileDrawerWidth
     }
+  },
+  paper: {
+    width: drawerWidth
   },
   divider: {
     width: "70%"

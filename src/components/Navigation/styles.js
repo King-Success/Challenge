@@ -32,6 +32,16 @@ export default makeStyles(theme => ({
       marginLeft: theme.spacing(1),
       width: "auto",
       display: "block"
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+      width: 0
+    }
+  },
+  buggerMenu: {
+    display: "block",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
     }
   },
   logo: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
@@ -16,32 +16,42 @@ import PolicyOutlinedIcon from "@material-ui/icons/PolicyOutlined";
 import Dropdown from "../Dropdown";
 import useStyles from "./styles";
 import configs from "../../configs";
+import { useTheme } from "@material-ui/core/styles";
 
 const { countries, sources, categories, languages, dropdownTypes } = configs;
 
-function AppDrawer({ handleDropdownChange }) {
+function AppDrawer({ handleDropdownChange, handleDrawerToggle, isOpen }) {
   const classes = useStyles();
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const theme = useTheme();
 
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-    if (mediaQuery.matches) setDrawerOpen(false);
-    else setDrawerOpen(true);
+    const mediaQuery = window.matchMedia("(max-width: 960px)");
+    if (mediaQuery.matches) setIsMobile(true);
+    else setIsMobile(false);
     // listen for a match event
     mediaQuery.addListener(mediaQ => {
       if (mediaQ.matches) {
-        setDrawerOpen(false);
+        setIsMobile(true);
       } else {
-        setDrawerOpen(true);
+        setIsMobile(false);
       }
     });
-  }, [isDrawerOpen]);
+  }, [isMobile]);
+
   return (
     <Drawer
-      variant="permanent"
+      variant={isMobile ? "temporary" : "permanent"}
+      anchor={theme.direction === "rtl" ? "right" : "left"}
+      open={isOpen}
+      onClose={handleDrawerToggle}
+      ModalProps={{
+        keepMounted: true // Better open performance on mobile.
+      }}
       className={classes.drawer}
       classes={{
-        paperAnchorDockedLeft: classes.paperAnchorDockedLeft
+        paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
+        paper: classes.paper
       }}
     >
       <List className={classes.list}>
@@ -147,7 +157,9 @@ function AppDrawer({ handleDropdownChange }) {
 }
 
 AppDrawer.propTypes = {
-  handleDropdownChange: PropTypes.func.isRequired
+  handleDropdownChange: PropTypes.func.isRequired,
+  handleDrawerToggle: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default AppDrawer;
