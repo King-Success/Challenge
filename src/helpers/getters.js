@@ -16,6 +16,10 @@ const getUrl = data => {
     url = `/top-headlines?page=${data.page}&pageSize=${data.pageSize}&sources=${
       data.source
     }`;
+  } else if (data.searchString) {
+    url = `/everything?page=${data.page}&pageSize=${data.pageSize}&q=${
+      data.searchString
+    }`;
   } else {
     url = `/top-headlines?page=${data.page}&pageSize=${data.pageSize}&country=${
       data.country

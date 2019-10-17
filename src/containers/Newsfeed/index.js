@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Skeleton from "@material-ui/lab/Skeleton";
-import shortid from "shortid";
 import Newscard from "../../components/Newscard";
 import Pagination from "../../components/Pagination";
 import * as NewsfeedActions from "./NewsfeedReducer";
@@ -42,24 +41,26 @@ function Newsfeed({ news, loading, fetchNews }) {
 
   return (
     <Grid className={classes.container} container spacing={1} justify="center">
-      {(loading ? Array.from(new Array(10)) : [...articles]).map(newsItem => {
-        return newsItem ? (
-          <>
-            <Grid key={shortid.generate()} item xs={12} sm={11}>
-              <Newscard news={newsItem} />
+      {(loading ? Array.from(new Array(10)) : [...articles]).map(
+        (newsItem, key) => {
+          return newsItem ? (
+            <>
+              <Grid key={key} item xs={12} sm={11}>
+                <Newscard news={newsItem} />
+              </Grid>
+            </>
+          ) : (
+            <Grid key={key} item xs={12} sm={11}>
+              <Skeleton
+                height={150}
+                width="100%"
+                variant="rect"
+                className={classes.skeleton}
+              />
             </Grid>
-          </>
-        ) : (
-          <Grid key={shortid.generate()} item xs={12} sm={11}>
-            <Skeleton
-              height={150}
-              width="100%"
-              variant="rect"
-              className={classes.skeleton}
-            />
-          </Grid>
-        );
-      })}
+          );
+        }
+      )}
       {loading || total <= pageSize ? (
         " "
       ) : (

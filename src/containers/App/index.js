@@ -18,12 +18,16 @@ const App = ({ fetchNews }) => {
     fetchNews({ ...fetchData, [type]: value });
   };
 
+  const handleSearch = ({ searchString }) => {
+    fetchNews({ ...fetchData, searchString });
+  };
+
   return (
     <>
       <div>
         <CssBaseline />
         <GlobalCss />
-        <Navigation handleSearch={() => {}} />
+        <Navigation handleSearch={handleSearch} />
         <Drawer handleDropdownChange={handleDropdownChange} />
         <Newsfeed />
       </div>
