@@ -26,6 +26,10 @@ function Newsfeed({ news, loading, fetchNews }) {
     fetchNews();
   }, [fetchNews]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [articles]);
+
   const handlePageChange = pageOffset => {
     const fetchData = {
       offset: pageOffset,
