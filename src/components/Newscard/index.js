@@ -18,14 +18,9 @@ export default function Newscard({ news }) {
           </div>
           <div className={classes.linksWrapper}>
             <ul className={classes.links}>
-              <li className={classes.linkItem}>
-                Source: <a href="/https:google.com?q=CNN">{news.source.name}</a>
-              </li>
+              <li className={classes.linkItem}>Source: {news.source.name}</li>
               <li className={classes.linkItem}>Posted: 6 hours ago</li>
-              <li className={classes.linkItem}>
-                Author:{" "}
-                <a href="/https:google.com?q=Gim%20Beglin">{news.author}</a>
-              </li>
+              <li className={classes.linkItem}>Author: {news.author}</li>
             </ul>
           </div>
         </CardContent>

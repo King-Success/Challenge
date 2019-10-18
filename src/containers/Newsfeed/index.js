@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Newscard from "../../components/Newscard";
 import Pagination from "../../components/Pagination";
@@ -50,7 +51,14 @@ function Newsfeed({ news, loading, fetchNews }) {
           return newsItem ? (
             <>
               <Grid key={key} item xs={12} sm={11}>
-                <Newscard news={newsItem} />
+                <Link
+                  href={newsItem.url}
+                  className={classes.noStyleLink}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Newscard news={newsItem} />
+                </Link>
               </Grid>
             </>
           ) : (

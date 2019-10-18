@@ -22,6 +22,13 @@ export default makeStyles(theme => ({
   skeleton: {
     borderRadius: "5px"
   },
+  noStyleLink: {
+    cursor: "pointer",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "none"
+    }
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
