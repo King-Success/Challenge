@@ -45,7 +45,7 @@ function Newsfeed({ news, loading, fetchNews }) {
   };
 
   return (
-    <Grid className={classes.container} container spacing={1} justify="center">
+    <Grid container spacing={1} justify="center">
       {(loading ? Array.from(new Array(10)) : [...articles]).map(
         (newsItem, key) => {
           return newsItem ? (

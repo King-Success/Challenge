@@ -1,5 +1,9 @@
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import "typeface-montserrat";
+import colors from "../../configs/colors";
+
+const drawerWidth = "240px";
+const appBarHeight = "64px";
 
 export default withStyles({
   "@global": {
@@ -11,3 +15,18 @@ export default withStyles({
     }
   }
 })(() => null);
+
+export const useStyle = makeStyles(theme => ({
+  container: {
+    width: `calc(100% - ${drawerWidth})`,
+    minHeight: `calc(100vh - ${appBarHeight})`,
+    margin: `${appBarHeight} 0 0 0`,
+    paddingTop: 30,
+    float: "right",
+    background: colors.white,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "3px"
+    }
+  }
+}));

@@ -12,7 +12,7 @@ export default makeStyles(theme => ({
     flexShrink: 0
   },
   paperAnchorDockedLeft: {
-    borderRight: "none",
+    // borderRight: "none",
     marginTop: appBarHeight,
     paddingTop: 10,
     [theme.breakpoints.down("sm")]: {

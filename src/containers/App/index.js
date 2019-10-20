@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
+import LoginFrom from "../../components/Login";
 import Newsfeed from "../Newsfeed";
+import Auth from "../Auth";
 import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
-import GlobalCss from "./globalCss";
+import GlobalCss, { useStyle } from "./globalCss";
 
 const App = ({ fetchNews }) => {
+  const classes = useStyle();
+
   const defaultPage = 1;
   const defaultPageSize = 10;
   const fetchData = {
@@ -42,7 +46,11 @@ const App = ({ fetchNews }) => {
           handleDrawerToggle={handleDrawerToggle}
           isOpen={drawerOpen}
         />
-        <Newsfeed />
+        <div className={classes.container}>
+          {/* <Newsfeed /> */}
+          <Auth />
+          {/* <LoginFrom /> */}
+        </div>
       </div>
     </>
   );
