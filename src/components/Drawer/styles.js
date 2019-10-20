@@ -12,7 +12,6 @@ export default makeStyles(theme => ({
     flexShrink: 0
   },
   paperAnchorDockedLeft: {
-    // borderRight: "none",
     marginTop: appBarHeight,
     paddingTop: 10,
     [theme.breakpoints.down("sm")]: {
@@ -26,7 +25,7 @@ export default makeStyles(theme => ({
     width: "70%"
   },
   list: {
-    padding: "24px 0"
+    padding: "19px 0"
   },
   content: {
     flexGrow: 1,

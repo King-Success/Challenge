@@ -6,11 +6,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LanguageOutlinedIcon from "@material-ui/icons/LanguageOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import CategoryOutlinedIcon from "@material-ui/icons/CategoryOutlined";
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutline";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import PolicyOutlinedIcon from "@material-ui/icons/PolicyOutlined";
 import Dropdown from "../Dropdown";
@@ -20,10 +20,19 @@ import { useTheme } from "@material-ui/core/styles";
 
 const { countries, sources, categories, languages, dropdownTypes } = configs;
 
-function AppDrawer({ handleDropdownChange, handleDrawerToggle, isOpen }) {
+function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
   const classes = useStyles();
   const theme = useTheme();
-
+  const userTabOptions = [
+    {
+      code: "",
+      name: (user && user.name) || "Authenticate"
+    },
+    {
+      code: (user && user.name && "logout") || "login",
+      name: (user && user.name && "Logout") || "Login or Register"
+    }
+  ];
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 960px)");
@@ -57,9 +66,18 @@ function AppDrawer({ handleDropdownChange, handleDrawerToggle, isOpen }) {
       <List className={classes.list}>
         <ListItem button key="breaking_news">
           <ListItemIcon>
-            <EmojiObjectsOutlinedIcon />
+            <PersonOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Breaking News" />
+          <ListItemText
+            primary={
+              <Dropdown
+                text="user"
+                value="User"
+                handleChange={handleDropdownChange(dropdownTypes.country)}
+                options={userTabOptions}
+              />
+            }
+          />
         </ListItem>
       </List>
       <Divider variant="middle" />
@@ -157,6 +175,7 @@ function AppDrawer({ handleDropdownChange, handleDrawerToggle, isOpen }) {
 }
 
 AppDrawer.propTypes = {
+  user: PropTypes.objectOf(PropTypes.any),
   handleDropdownChange: PropTypes.func.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired

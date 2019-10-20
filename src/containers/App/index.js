@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { connect } from "react-redux";
+import { withRouter, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
-import LoginFrom from "../../components/Login";
-import Newsfeed from "../Newsfeed";
-import Auth from "../Auth";
 import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
 import GlobalCss, { useStyle } from "./globalCss";
+// Using code splitting to load componets
+const Newsfeed = lazy(() => import("../Newsfeed/index"));
+const Auth = lazy(() => import("../Auth/index"));
 
-const App = ({ fetchNews }) => {
+const App = ({ fetchNews, user }) => {
   const classes = useStyle();
-
   const defaultPage = 1;
   const defaultPageSize = 10;
   const fetchData = {
     offset: defaultPage,
     pageSize: defaultPageSize
   };
+
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDropdownChange = type => value => {
@@ -47,18 +48,30 @@ const App = ({ fetchNews }) => {
           isOpen={drawerOpen}
         />
         <div className={classes.container}>
-          {/* <Newsfeed /> */}
-          <Auth />
-          {/* <LoginFrom /> */}
+          <Switch>
+            <Route path="/newsfeed">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Newsfeed />
+              </Suspense>
+            </Route>
+            <Route path="/authentication">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Auth />
+              </Suspense>
+            </Route>
+          </Switch>
         </div>
       </div>
     </>
   );
 };
 
+const mapStateToProp = ({ user }) => ({ user });
 const mapDispatchToProp = { fetchNews: NewsfeedActions.fetchNews };
 
-export default connect(
-  null,
-  mapDispatchToProp
-)(App);
+export default withRouter(
+  connect(
+    mapStateToProp,
+    mapDispatchToProp
+  )(App)
+);

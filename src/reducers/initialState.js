@@ -10,6 +10,10 @@ export default {
     searchString: "",
     articles: []
   },
+  user: {
+    name: undefined,
+    email: undefined
+  },
   loading: false,
   error: false
 };

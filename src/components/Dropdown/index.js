@@ -32,5 +32,5 @@ export default function Dropdown({ text, handleChange, options }) {
 Dropdown.propTypes = {
   text: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired
+  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired
 };
