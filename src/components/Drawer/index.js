@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
@@ -23,17 +24,23 @@ const { countries, sources, categories, languages, dropdownTypes } = configs;
 function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
   const userTabOptions = [
     {
       code: "",
-      name: (user && user.name) || "Authenticate"
+      name: (user && user.name) || "User"
     },
     {
-      code: (user && user.name && "logout") || "login",
-      name: (user && user.name && "Logout") || "Login or Register"
+      code: (user && user.name && "logout") || "authentication",
+      name: (user && user.name && "Logout") || "Sign in"
     }
   ];
   const [isMobile, setIsMobile] = useState(false);
+
+  const handleAuthDropdown = value => {
+    console.log(value);
+    history.push(`/${value}`);
+  };
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 960px)");
     if (mediaQuery.matches) setIsMobile(true);
@@ -64,16 +71,16 @@ function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
       }}
     >
       <List className={classes.list}>
-        <ListItem button key="breaking_news">
+        <ListItem button key="authentication">
           <ListItemIcon>
             <PersonOutlinedIcon />
           </ListItemIcon>
           <ListItemText
             primary={
               <Dropdown
-                text="user"
-                value="User"
-                handleChange={handleDropdownChange(dropdownTypes.country)}
+                text="authentication"
+                value="Authentication"
+                handleChange={handleAuthDropdown}
                 options={userTabOptions}
               />
             }

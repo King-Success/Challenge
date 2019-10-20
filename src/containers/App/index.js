@@ -49,14 +49,14 @@ const App = ({ fetchNews, user }) => {
         />
         <div className={classes.container}>
           <Switch>
-            <Route path="/newsfeed">
-              <Suspense fallback={<div>Loading...</div>}>
-                <Newsfeed />
-              </Suspense>
-            </Route>
             <Route path="/authentication">
               <Suspense fallback={<div>Loading...</div>}>
                 <Auth />
+              </Suspense>
+            </Route>
+            <Route path="/">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Newsfeed />
               </Suspense>
             </Route>
           </Switch>

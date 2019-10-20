@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,11 +18,13 @@ export default function Navigation({ handleSearch, handleDrawerToggle }) {
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            <CardMedia
-              component="img"
-              className={classes.logo}
-              image="/logo.png"
-            />
+            <Link to="/">
+              <CardMedia
+                component="img"
+                className={classes.logo}
+                image="/logo.png"
+              />
+            </Link>
           </Typography>
           <div className={classes.search}>
             <SearchForm submitHandler={handleSearch} />

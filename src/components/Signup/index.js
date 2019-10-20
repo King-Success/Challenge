@@ -19,6 +19,14 @@ function Signup({ linkHandler }) {
       <form className={classes.form}>
         <TextField
           id="outlined-dense"
+          label="Username"
+          className={clsx(classes.textField, classes.dense)}
+          margin="dense"
+          variant="outlined"
+          required
+        />{" "}
+        <TextField
+          id="outlined-dense"
           label="Email"
           className={clsx(classes.textField, classes.dense)}
           margin="dense"
@@ -28,15 +36,6 @@ function Signup({ linkHandler }) {
         <TextField
           id="outlined-dense"
           label="Password"
-          className={clsx(classes.textField, classes.dense)}
-          margin="dense"
-          variant="outlined"
-          type="password"
-          required
-        />{" "}
-        <TextField
-          id="outlined-dense"
-          label="Confirm Password"
           className={clsx(classes.textField, classes.dense)}
           margin="dense"
           variant="outlined"
