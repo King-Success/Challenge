@@ -1,19 +1,18 @@
-import { combineReducers } from "redux";
 import axios from "../../helpers/axiosClient";
 import initialState from "../../reducers/initialState";
 import getters from "../../helpers/getters";
 
-const { bookmarks, loading, error } = initialState;
+const { bookmarks } = initialState;
 const { getUrl, getPage } = getters;
 // Actions
-const FETCH_START = "beaking-news/bookmarks/FETCH/START";
-const FETCH_FAILURE = "beaking-news/bookmarks/FETCH/FAILURE";
-const FETCH_SUCCESS = "beaking-news/bookmarks/FETCH/SUCCESS";
+export const FETCH_START_BOOKMARKS = "beaking-news/bookmarks/FETCH/START";
+export const FETCH_FAILURE_BOOKMARKS = "beaking-news/bookmarks/FETCH/FAILURE";
+export const FETCH_SUCCESS_BOOKMARKS = "beaking-news/bookmarks/FETCH/SUCCESS";
 
-// Sub Reducers
-const bookmarkReducer = (state = bookmarks, action) => {
+// Reducers
+export default (state = bookmarks, action) => {
   switch (action.type) {
-    case FETCH_SUCCESS:
+    case FETCH_SUCCESS_BOOKMARKS:
       return {
         ...state,
         total: action.total,
@@ -25,35 +24,6 @@ const bookmarkReducer = (state = bookmarks, action) => {
       return state;
   }
 };
-
-const errorReducer = (state = error, action) => {
-  switch (action.type) {
-    case FETCH_FAILURE:
-      return action.message;
-    default:
-      return state;
-  }
-};
-
-const loadingReducer = (state = loading, action) => {
-  switch (action.type) {
-    case FETCH_START:
-      return true;
-    case FETCH_FAILURE:
-      return false;
-    case FETCH_SUCCESS:
-      return false;
-    default:
-      return state;
-  }
-};
-
-// Main Reducer
-export default combineReducers({
-  bookmarks: bookmarkReducer,
-  loading: loadingReducer,
-  error: errorReducer
-});
 
 // Action creators
 export const fetchBookmarks = (
@@ -67,18 +37,18 @@ export const fetchBookmarks = (
   const page = getPage(offset, pageSize);
   const url = getUrl({ ...data, page });
   return async dispatch => {
-    dispatch({ type: FETCH_START });
+    dispatch({ type: FETCH_START_BOOKMARKS });
     try {
       const result = await axios.get(url);
       dispatch({
-        type: FETCH_SUCCESS,
+        type: FETCH_SUCCESS_BOOKMARKS,
         articles: result.data.articles,
         total: result.data.totalResults,
         offset: data.offset,
         searchString: data.searchString
       });
     } catch (e) {
-      dispatch({ type: FETCH_FAILURE, message: e });
+      dispatch({ type: FETCH_FAILURE_BOOKMARKS, message: e });
     }
   };
 };

@@ -1,17 +1,18 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import { withRouter, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
 import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
+import * as AuthActions from "../Auth/AuthReducer";
 import GlobalCss, { useStyle } from "./globalCss";
 // Using code splitting to load componets
 const Newsfeed = lazy(() => import("../Newsfeed/index"));
 const Bookmark = lazy(() => import("../Bookmark/index"));
 const Auth = lazy(() => import("../Auth/index"));
 
-const App = ({ fetchNews, user }) => {
+const App = ({ fetchNews, user, loadActiveUser }) => {
   const classes = useStyle();
   const defaultPage = 1;
   const defaultPageSize = 10;
@@ -20,6 +21,9 @@ const App = ({ fetchNews, user }) => {
     pageSize: defaultPageSize
   };
 
+  useEffect(() => {
+    loadActiveUser();
+  }, []);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDropdownChange = type => value => {
@@ -47,6 +51,7 @@ const App = ({ fetchNews, user }) => {
           handleDropdownChange={handleDropdownChange}
           handleDrawerToggle={handleDrawerToggle}
           isOpen={drawerOpen}
+          user={user}
         />
         <div className={classes.container}>
           <Switch>
@@ -73,7 +78,10 @@ const App = ({ fetchNews, user }) => {
 };
 
 const mapStateToProp = ({ user }) => ({ user });
-const mapDispatchToProp = { fetchNews: NewsfeedActions.fetchNews };
+const mapDispatchToProp = {
+  fetchNews: NewsfeedActions.fetchNews,
+  loadActiveUser: AuthActions.loadActiveUser
+};
 
 export default withRouter(
   connect(

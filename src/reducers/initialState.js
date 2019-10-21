@@ -11,7 +11,7 @@ export default {
     articles: []
   },
   user: {
-    name: undefined,
+    username: undefined,
     email: undefined
   },
   bookmarks: {

@@ -28,17 +28,16 @@ function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
   const userTabOptions = [
     {
       code: "",
-      name: (user && user.name) || "User"
+      name: (user && user.username) || "User"
     },
     {
-      code: (user && user.name && "logout") || "authentication",
-      name: (user && user.name && "Logout") || "Sign in"
+      code: (user && user.username && "logout") || "authentication",
+      name: (user && user.username && "Logout") || "Sign in"
     }
   ];
   const [isMobile, setIsMobile] = useState(false);
 
   const handleAuthDropdown = value => {
-    console.log(value);
     history.push(`/${value}`);
   };
   useEffect(() => {

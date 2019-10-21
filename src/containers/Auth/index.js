@@ -1,17 +1,32 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Login from "../../components/Login";
 import Signup from "../../components/Signup";
+import * as AuthReducer from "./AuthReducer";
 import useStyle from "./styles";
-function Auth() {
+function Auth({ user, loading, error, signup, login }) {
   const classes = useStyle();
   const [active, setActive] = useState("login");
+  const history = useHistory();
 
   const handleChange = (event, newValue) => {
     setActive(newValue);
+  };
+
+  const handleLogin = async data => {
+    await login(data);
+    history.push("/");
+  };
+
+  const handleSignup = async data => {
+    await signup(data);
+    history.push("/");
   };
 
   return (
@@ -33,9 +48,37 @@ function Auth() {
           <Tab label="Register" value="register" />
         </Tabs>
       </Paper>
-      {active === "login" ? <Login /> : <Signup linkHandler={handleChange} />}
+      {active === "login" ? (
+        <Login loginHandler={handleLogin} />
+      ) : (
+        <Signup linkHandler={handleChange} signupHandler={handleSignup} />
+      )}
     </Card>
   );
 }
 
-export default Auth;
+Auth.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  signup: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired
+};
+
+const mapStateToProps = ({ user, loading, error }) => ({
+  user,
+  loading,
+  error
+});
+
+const mapDispatchToProps = {
+  signup: AuthReducer.signup,
+  login: AuthReducer.login
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth);
