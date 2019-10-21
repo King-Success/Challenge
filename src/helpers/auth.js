@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 const { REACT_APP_SALT: salt } = process.env;
 const hashPassword = async password => {
-  return bcrypt.hash(password, 10, (err, hash) => {
+  return bcrypt.hash(password, salt, (err, hash) => {
     return hash;
   });
 };
@@ -28,8 +28,8 @@ export const loginHelper = async data => {
   const { email, password } = data;
   try {
     let user = JSON.parse(await localStorage.getItem("user"));
-    // eslint-disable-next-line eqeqeq
     if (
+      // eslint-disable-next-line eqeqeq
       email == user.email &&
       (await comparePassword(password, user.password))
     ) {
@@ -56,6 +56,17 @@ export const loadHelper = async () => {
     data: {
       username: user.username,
       email: user.email
+    },
+    status: 200
+  };
+};
+
+export const logoutHelper = () => {
+  localStorage.removeItem("user");
+  return {
+    data: {
+      username: undefined,
+      email: undefined
     },
     status: 200
   };

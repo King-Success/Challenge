@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import useStyles from "./styles";
-import { sign } from "crypto";
 function Signup({ linkHandler, signupHandler }) {
   const classes = useStyles();
 

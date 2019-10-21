@@ -12,7 +12,7 @@ const Newsfeed = lazy(() => import("../Newsfeed/index"));
 const Bookmark = lazy(() => import("../Bookmark/index"));
 const Auth = lazy(() => import("../Auth/index"));
 
-const App = ({ fetchNews, user, loadActiveUser }) => {
+const App = ({ fetchNews, user, loadActiveUser, logout }) => {
   const classes = useStyle();
   const defaultPage = 1;
   const defaultPageSize = 10;
@@ -23,7 +23,7 @@ const App = ({ fetchNews, user, loadActiveUser }) => {
 
   useEffect(() => {
     loadActiveUser();
-  }, []);
+  }, [loadActiveUser]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDropdownChange = type => value => {
@@ -38,6 +38,10 @@ const App = ({ fetchNews, user, loadActiveUser }) => {
     setDrawerOpen(!drawerOpen);
   };
 
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <>
       <div>
@@ -50,6 +54,7 @@ const App = ({ fetchNews, user, loadActiveUser }) => {
         <Drawer
           handleDropdownChange={handleDropdownChange}
           handleDrawerToggle={handleDrawerToggle}
+          handleLogout={handleLogout}
           isOpen={drawerOpen}
           user={user}
         />
@@ -80,7 +85,8 @@ const App = ({ fetchNews, user, loadActiveUser }) => {
 const mapStateToProp = ({ user }) => ({ user });
 const mapDispatchToProp = {
   fetchNews: NewsfeedActions.fetchNews,
-  loadActiveUser: AuthActions.loadActiveUser
+  loadActiveUser: AuthActions.loadActiveUser,
+  logout: AuthActions.logout
 };
 
 export default withRouter(

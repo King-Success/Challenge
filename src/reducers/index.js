@@ -15,7 +15,13 @@ import authReducer, {
   FETCH_SUCCESS_LOGIN,
   FETCH_FAILURE_SIGNUP,
   FETCH_START_SIGNUP,
-  FETCH_SUCCESS_SIGNUP
+  FETCH_SUCCESS_SIGNUP,
+  FETCH_FAILURE_LOAD,
+  FETCH_START_LOAD,
+  FETCH_SUCCESS_LOAD,
+  FETCH_FAILURE_LOGOUT,
+  FETCH_START_LOGOUT,
+  FETCH_SUCCESS_LOGOUT
 } from "../containers/Auth/AuthReducer";
 import initialState from "./initialState";
 
@@ -30,6 +36,8 @@ export const errorReducer = (state = error, action) => {
     case FETCH_FAILURE_LOGIN:
       return action.message;
     case FETCH_FAILURE_SIGNUP:
+      return action.message;
+    case FETCH_FAILURE_LOGOUT:
       return action.message;
     default:
       return state;
@@ -61,6 +69,18 @@ export const loadingReducer = (state = loading, action) => {
     case FETCH_FAILURE_SIGNUP:
       return false;
     case FETCH_SUCCESS_SIGNUP:
+      return false;
+    case FETCH_START_LOAD:
+      return true;
+    case FETCH_FAILURE_LOAD:
+      return false;
+    case FETCH_SUCCESS_LOAD:
+      return false;
+    case FETCH_START_LOGOUT:
+      return true;
+    case FETCH_FAILURE_LOGOUT:
+      return false;
+    case FETCH_SUCCESS_LOGOUT:
       return false;
     default:
       return state;

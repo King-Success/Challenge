@@ -21,7 +21,13 @@ import { useTheme } from "@material-ui/core/styles";
 
 const { countries, sources, categories, languages, dropdownTypes } = configs;
 
-function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
+function AppDrawer({
+  user,
+  handleDropdownChange,
+  handleLogout,
+  handleDrawerToggle,
+  isOpen
+}) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
@@ -38,8 +44,13 @@ function AppDrawer({ user, handleDropdownChange, handleDrawerToggle, isOpen }) {
   const [isMobile, setIsMobile] = useState(false);
 
   const handleAuthDropdown = value => {
+    if (value === "logout") {
+      handleLogout();
+      return history.push("/");
+    }
     history.push(`/${value}`);
   };
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 960px)");
     if (mediaQuery.matches) setIsMobile(true);
@@ -184,6 +195,7 @@ AppDrawer.propTypes = {
   user: PropTypes.objectOf(PropTypes.any),
   handleDropdownChange: PropTypes.func.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired
 };
 

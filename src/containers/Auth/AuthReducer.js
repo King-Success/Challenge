@@ -1,5 +1,10 @@
 import initialState from "../../reducers/initialState";
-import { loginHelper, signupHelper, loadHelper } from "../../helpers/auth";
+import {
+  loginHelper,
+  signupHelper,
+  loadHelper,
+  logoutHelper
+} from "../../helpers/auth";
 
 const { user } = initialState;
 // Actions
@@ -12,6 +17,9 @@ export const FETCH_SUCCESS_SIGNUP = "beaking-news/signup/SUCCESS";
 export const FETCH_START_LOAD = "beaking-news/load/START";
 export const FETCH_FAILURE_LOAD = "beaking-news/load/FAILURE";
 export const FETCH_SUCCESS_LOAD = "beaking-news/load/SUCCESS";
+export const FETCH_START_LOGOUT = "beaking-news/logout/START";
+export const FETCH_FAILURE_LOGOUT = "beaking-news/logout/FAILURE";
+export const FETCH_SUCCESS_LOGOUT = "beaking-news/logout/SUCCESS";
 
 // Reducers
 export default (state = user, action) => {
@@ -29,6 +37,12 @@ export default (state = user, action) => {
         email: action.email
       };
     case FETCH_SUCCESS_LOAD:
+      return {
+        ...state,
+        username: action.username,
+        email: action.email
+      };
+    case FETCH_SUCCESS_LOGOUT:
       return {
         ...state,
         username: action.username,
@@ -87,12 +101,31 @@ export const loadActiveUser = () => {
         return dispatch({ type: FETCH_FAILURE_LOAD, message: result.error });
       const { data } = result;
       dispatch({
-        type: FETCH_SUCCESS_SIGNUP,
+        type: FETCH_SUCCESS_LOAD,
         username: data.username,
         email: data.email
       });
     } catch (e) {
       dispatch({ type: FETCH_FAILURE_LOAD, message: e });
+    }
+  };
+};
+
+export const logout = () => {
+  return async dispatch => {
+    dispatch({ type: FETCH_START_LOGOUT });
+    try {
+      const result = await logoutHelper();
+      if (result.error)
+        return dispatch({ type: FETCH_FAILURE_LOGOUT, message: result.error });
+      const { data } = result;
+      dispatch({
+        type: FETCH_SUCCESS_LOGOUT,
+        username: data.username,
+        email: data.email
+      });
+    } catch (e) {
+      dispatch({ type: FETCH_FAILURE_LOGOUT, message: e });
     }
   };
 };
