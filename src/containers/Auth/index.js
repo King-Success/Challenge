@@ -60,8 +60,8 @@ function Auth({ user, loading, error, signup, login }) {
 Auth.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
+    username: PropTypes.string,
+    email: PropTypes.string
   }).isRequired,
   signup: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired

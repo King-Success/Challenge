@@ -4,6 +4,7 @@ import { withRouter, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
+import Spinner from "../../components/Spinner";
 import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
 import * as AuthActions from "../Auth/AuthReducer";
 import GlobalCss, { useStyle } from "./globalCss";
@@ -61,17 +62,17 @@ const App = ({ fetchNews, user, loadActiveUser, logout }) => {
         <div className={classes.container}>
           <Switch>
             <Route path="/authentication">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Auth />
               </Suspense>
             </Route>
             <Route path="/bookmarks">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Bookmark />
               </Suspense>
             </Route>
             <Route path="/">
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Newsfeed />
               </Suspense>
             </Route>
