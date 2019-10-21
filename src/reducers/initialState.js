@@ -14,6 +14,13 @@ export default {
     name: undefined,
     email: undefined
   },
+  bookmarks: {
+    total: 0,
+    offset: 1,
+    pageSize: 10,
+    searchString: "",
+    articles: []
+  },
   loading: false,
   error: false
 };

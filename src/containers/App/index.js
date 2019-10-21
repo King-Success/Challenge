@@ -8,6 +8,7 @@ import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
 import GlobalCss, { useStyle } from "./globalCss";
 // Using code splitting to load componets
 const Newsfeed = lazy(() => import("../Newsfeed/index"));
+const Bookmark = lazy(() => import("../Bookmark/index"));
 const Auth = lazy(() => import("../Auth/index"));
 
 const App = ({ fetchNews, user }) => {
@@ -52,6 +53,11 @@ const App = ({ fetchNews, user }) => {
             <Route path="/authentication">
               <Suspense fallback={<div>Loading...</div>}>
                 <Auth />
+              </Suspense>
+            </Route>
+            <Route path="/bookmarks">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Bookmark />
               </Suspense>
             </Route>
             <Route path="/">

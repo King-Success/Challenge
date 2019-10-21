@@ -1,16 +1,17 @@
+import { combineReducers } from "redux";
 import axios from "../../helpers/axiosClient";
 import initialState from "../../reducers/initialState";
 import getters from "../../helpers/getters";
 
-const { news } = initialState;
+const { bookmarks, loading, error } = initialState;
 const { getUrl, getPage } = getters;
 // Actions
-export const FETCH_START = "beaking-news/news/FETCH/START";
-export const FETCH_FAILURE = "beaking-news/news/FETCH/FAILURE";
-export const FETCH_SUCCESS = "beaking-news/news/FETCH/SUCCESS";
+const FETCH_START = "beaking-news/bookmarks/FETCH/START";
+const FETCH_FAILURE = "beaking-news/bookmarks/FETCH/FAILURE";
+const FETCH_SUCCESS = "beaking-news/bookmarks/FETCH/SUCCESS";
 
 // Sub Reducers
-export default (state = news, action) => {
+const bookmarkReducer = (state = bookmarks, action) => {
   switch (action.type) {
     case FETCH_SUCCESS:
       return {
@@ -18,10 +19,6 @@ export default (state = news, action) => {
         total: action.total,
         articles: action.articles,
         offset: action.offset,
-        language: action.language,
-        category: action.category,
-        source: action.source,
-        country: action.country,
         searchString: action.searchString
       };
     default:
@@ -29,15 +26,40 @@ export default (state = news, action) => {
   }
 };
 
+const errorReducer = (state = error, action) => {
+  switch (action.type) {
+    case FETCH_FAILURE:
+      return action.message;
+    default:
+      return state;
+  }
+};
+
+const loadingReducer = (state = loading, action) => {
+  switch (action.type) {
+    case FETCH_START:
+      return true;
+    case FETCH_FAILURE:
+      return false;
+    case FETCH_SUCCESS:
+      return false;
+    default:
+      return state;
+  }
+};
+
+// Main Reducer
+export default combineReducers({
+  bookmarks: bookmarkReducer,
+  loading: loadingReducer,
+  error: errorReducer
+});
+
 // Action creators
-export const fetchNews = (
+export const fetchBookmarks = (
   data = {
     offset: 1,
     pageSize: 10,
-    country: "us",
-    category: "general",
-    language: "en",
-    source: "",
     searchString: ""
   }
 ) => {
@@ -53,10 +75,6 @@ export const fetchNews = (
         articles: result.data.articles,
         total: result.data.totalResults,
         offset: data.offset,
-        language: data.language,
-        category: data.category,
-        source: data.source,
-        country: data.country,
         searchString: data.searchString
       });
     } catch (e) {
