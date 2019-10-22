@@ -16,15 +16,16 @@ export default function Error({ history, message }) {
     <Card className={classes.card}>
       <CardContent className={classes.content}>
         <div className={classes.message}>
-          <Typography component="h1">
-            {message ||
-              "Oops, Something went wrong! Check your connection and try again."}
+          <Typography component="h1" varient="h1">
+            <strong>
+              {message ||
+                "Oops, Something went wrong! Check your connection and try again."}
+            </strong>
           </Typography>
         </div>
         <div className={classes.buttonWrapper}>
           <Button
             variant="contained"
-            color="secondary"
             className={classes.button}
             onClick={goBack}
           >

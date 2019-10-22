@@ -13,8 +13,7 @@ export default makeStyles(theme => ({
     }
   },
   details: {
-    maxWidth: "",
-    paddingBottom: "10px"
+    maxWidth: ""
   },
   content: {
     display: "flex",
@@ -24,10 +23,25 @@ export default makeStyles(theme => ({
     padding: 20
   },
   message: {
-    paddingBottom: 30,
+    paddingBottom: 15,
+    paddingTop: 20,
     margin: "0 auto"
   },
   buttonWrapper: {
-    margin: "0 auto"
+    margin: "0 auto",
+    paddingBottom: 20
+  },
+  button: {
+    margin: theme.spacing(1),
+    marginTop: theme.spacing(5),
+    width: "100px",
+    backgroundColor: colors.green,
+    opacity: 0.8,
+    float: "right",
+    color: colors.white,
+    "&:hover": {
+      backgroundColor: colors.green,
+      opacity: 1
+    }
   }
 }));
