@@ -1,10 +1,11 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { connect } from "react-redux";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route, useHistory } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Navigation from "../../components/Navigation";
 import Drawer from "../../components/Drawer";
 import Spinner from "../../components/Spinner";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import * as NewsfeedActions from "../Newsfeed/NewsfeedReducer";
 import * as AuthActions from "../Auth/AuthReducer";
 import GlobalCss, { useStyle } from "./globalCss";
@@ -15,6 +16,7 @@ const Auth = lazy(() => import("../Auth/index"));
 
 const App = ({ fetchNews, user, loadActiveUser, logout }) => {
   const classes = useStyle();
+  const history = useHistory();
   const defaultPage = 1;
   const defaultPageSize = 10;
   const fetchData = {
@@ -73,7 +75,9 @@ const App = ({ fetchNews, user, loadActiveUser, logout }) => {
             </Route>
             <Route path="/">
               <Suspense fallback={<Spinner />}>
-                <Newsfeed />
+                <ErrorBoundary history={history}>
+                  <Newsfeed />
+                </ErrorBoundary>
               </Suspense>
             </Route>
           </Switch>

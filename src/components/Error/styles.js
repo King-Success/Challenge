@@ -6,30 +6,28 @@ export default makeStyles(theme => ({
     display: "flex",
     backgroundColor: colors.gray,
     height: "inherit",
+    width: "80%",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "12px"
+      fontSize: "12px",
+      width: "100%"
     }
   },
   details: {
     maxWidth: "",
-    width: "70%",
-    paddingBottom: "10px",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%"
-    }
+    paddingBottom: "10px"
   },
   content: {
     display: "flex",
     flexDirection: "column",
     flex: "1 0 auto",
     height: "100%",
-    paddingBottom: "0 !important",
-    padding: "10px 20px"
+    padding: 20
   },
-  description: {},
-  title: {
-    padding: "2px 0",
-    margin: 0
+  message: {
+    paddingBottom: 30,
+    margin: "0 auto"
   },
-  linksWrapper: {}
+  buttonWrapper: {
+    margin: "0 auto"
+  }
 }));

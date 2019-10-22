@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
@@ -6,11 +7,13 @@ import Link from "@material-ui/core/Link";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Newscard from "../../components/Newscard";
 import Pagination from "../../components/Pagination";
+import Error from "../../components/Error";
 import * as NewsfeedActions from "./NewsfeedReducer";
 import useStyles from "./styles";
 
-function Newsfeed({ news, loading, fetchNews }) {
+function Newsfeed({ news, loading, error, fetchNews }) {
   const classes = useStyles();
+  const history = useHistory();
   const {
     articles,
     total,
@@ -46,8 +49,23 @@ function Newsfeed({ news, loading, fetchNews }) {
 
   return (
     <Grid container spacing={1} justify="center">
-      {(loading ? Array.from(new Array(10)) : [...articles]).map(
-        (newsItem, key) => {
+      {loading ? (
+        Array.from(new Array(10)).map((_, key) => {
+          return (
+            <Grid key={key} item xs={12} sm={11}>
+              <Skeleton
+                height={150}
+                width="100%"
+                variant="rect"
+                className={classes.skeleton}
+              />
+            </Grid>
+          );
+        })
+      ) : error ? (
+        <Error history={history} />
+      ) : (
+        [...articles].map((newsItem, key) => {
           return newsItem ? (
             <>
               <Grid key={key} item xs={12} sm={11}>
@@ -71,9 +89,9 @@ function Newsfeed({ news, loading, fetchNews }) {
               />
             </Grid>
           );
-        }
+        })
       )}
-      {loading || total <= pageSize ? (
+      {loading || total <= pageSize || error ? (
         " "
       ) : (
         <Pagination
@@ -91,6 +109,7 @@ function Newsfeed({ news, loading, fetchNews }) {
 
 Newsfeed.propTypes = {
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.any,
   news: PropTypes.shape({
     articles: PropTypes.array.isRequired,
     offset: PropTypes.number.isRequired,
@@ -105,7 +124,11 @@ Newsfeed.propTypes = {
   fetchNews: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ news, loading }) => ({ news, loading });
+const mapStateToProps = ({ news, loading, error }) => ({
+  news,
+  loading,
+  error
+});
 const mapDispatchToProps = { fetchNews: NewsfeedActions.fetchNews };
 
 export default connect(
